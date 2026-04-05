@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Result</title>
+
+<style>
+body { background:rgb(188, 104, 162),rgb(86, 146, 167); color:rgb(143, 161, 170); text-align:center; }
+
+video { width:70%; margin:20px; }
+
+button {
+    padding:10px 20px;
+    margin:10px;
+    border:none;
+    border-radius:8px;
+    background:#57747c;
+    color:rgb(192, 18, 18);
+    cursor:pointer;
+}
+
+#subsBox {
+    display:none;
+    background:#b4cf9d;
+    padding:15px;
+    margin:20px;
+    border-radius:10px;
+    max-height:300px;
+    overflow-y:auto;
+}
+</style>
+
+<script>
+function toggleSubs(){
+    let box = document.getElementById("subsBox");
+
+    if(box.style.display === "none"){
+        box.style.display = "block";
+    } else {
+        box.style.display = "none";
+    }
+}
+</script>
+
+</head>
+
+<body>
+
+{% if mode == "video" %}
+
+<h3>Original Video</h3>
+<iframe width="560" height="315"
+src="{{ original.replace('watch?v=', 'embed/') }}"></iframe>
+
+<h3>Translated Video</h3>
+<video controls>
+<source src="/download/{{ video }}">
+</video>
+
+<!-- 🔥 SUBTITLE BUTTON -->
+<button onclick="toggleSubs()">📜 Show Subtitles</button>
+
+<!-- 🔥 SUBTITLE BOX -->
+<div id="subsBox">
+{% for line in subtitles %}
+<p>{{ line }}</p>
+{% endfor %}
+</div>
+
+<!-- DOWNLOAD -->
+<a href="/download/{{ video }}"><button>⬇ Download Video</button></a>
+<a href="/download/subtitles.srt"><button>⬇ Download Subtitles</button></a>
+
+{% endif %}
+
+{% if mode == "text" %}
+<h3>Translated Text</h3>
+<p>{{ text }}</p>
+
+<button onclick="toggleSubs()">📜 Show Subtitles</button>
+
+<div id="subsBox">
+{% for line in subtitles %}
+<p>{{ line }}</p>
+{% endfor %}
+</div>
+
+{% endif %}
+
+{% if mode == "error" %}
+<h2 style="color:rgb(146, 48, 48);">{{ error }}</h2>
+{% endif %}
+
+</body>
+</html>

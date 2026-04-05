@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>AI Video Translator</title>
+
+<style>
+body {
+    background: linear-gradient(to right, #1b9aba, #af03b8);
+    color: white;
+    text-align: center;
+    font-family: Arial;
+}
+
+.container {
+    background: rgba(6, 64, 75, 0.641);
+    padding: 30px;
+    border-radius: 15px;
+    width: 450px;
+    margin: auto;
+}
+
+h1 { font-size: 42px; }
+
+input, select, button {
+    width: 100%;
+    padding: 12px;
+    margin: 10px;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+button {
+    background: #bbb150;
+    color: white;
+    cursor: button;
+}
+
+#progress { display:none; }
+</style>
+</head>
+
+<body>
+
+<h1>🎬 AI Video Translator</h1>
+
+<div class="container">
+
+<form action="/process" method="POST" onsubmit="showProgress()">
+
+<input type="text" name="url" placeholder="Paste YouTube URL here" required>
+
+<select name="lang" required>
+<option value="">Select Language</option>
+<option value="hi">Hindi</option>
+<option value="en">English</option>
+<option value="mr">Marathi</option>
+<option value="bn">Bengali</option>
+<option value="ta">Tamil</option>
+<option value="te">Telugu</option>
+<option value="gu">Gujarati</option>
+<option value="kn">Kannada</option>
+<option value="ml">Malayalam</option>
+<option value="or">Odia</option>
+<option value="pa">Punjabi</option>
+</select>
+
+<select name="mode" required>
+<option value="">Select Translation Mode</option>
+<option value="video">Video ➝ Video</option>
+<option value="text">Video ➝ Text</option>
+</select>
+
+<button>🚀 Start Processing</button>
+
+</form>
+
+<div id="progress">
+<h3>⏳ Processing...</h3>
+</div>
+
+</div>
+
+<script>
+function showProgress(){
+    document.getElementById("progress").style.display="block";
+}
+</script>
+
+</body>
+</html>
