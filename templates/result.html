@@ -1,94 +1,103 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Result</title>
+    <title>Result</title>
 
-<style>
-body { background:rgb(188, 104, 162),rgb(86, 146, 167); color:rgb(143, 161, 170); text-align:center; }
+    <style>
+        body {
+            background: linear-gradient(to right, #768ebb, #6198b8);
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: center;
+        }
 
-video { width:70%; margin:20px; }
+        h1 {
+            font-size: 40px;
+            margin-top: 20px;
+        }
 
-button {
-    padding:10px 20px;
-    margin:10px;
-    border:none;
-    border-radius:8px;
-    background:#57747c;
-    color:rgb(192, 18, 18);
-    cursor:pointer;
-}
+        video {
+            width: 70%;
+            display: ruby-base-container;
+            margin: 20px auto;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
 
-#subsBox {
-    display:none;
-    background:#b4cf9d;
-    padding:15px;
-    margin:20px;
-    border-radius:10px;
-    max-height:300px;
-    overflow-y:auto;
-}
-</style>
+        .btn {
+            display: block;
+            width: 250px;
+            margin: 15px auto;
+            padding: 12px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            background: #ac8854;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-<script>
-function toggleSubs(){
-    let box = document.getElementById("subsBox");
+        .btn:hover {
+            background: #aa8e63;
+        }
 
-    if(box.style.display === "none"){
-        box.style.display = "block";
-    } else {
-        box.style.display = "none";
-    }
-}
-</script>
+        #subtitle-box {
+            display: none;
+            background: white;
+            color: rgb(158, 18, 18);
+            width: 70%;
+            margin: 20px auto;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: left;
+        }
+    </style>
+
+    <script>
+        function toggleSubtitle() {
+            var box = document.getElementById("subtitle-box");
+            if (box.style.display === "none") {
+                box.style.display = "block";
+            } else {
+                box.style.display = "none";
+            }
+        }
+    </script>
 
 </head>
 
 <body>
 
-{% if mode == "video" %}
+    <h1>🎬 Translated Video Result</h1>
 
-<h3>Original Video</h3>
-<iframe width="560" height="315"
-src="{{ original.replace('watch?v=', 'embed/') }}"></iframe>
-
-<h3>Translated Video</h3>
+<!-- ORIGINAL VIDEO -->
+<h2>🎥 Original Video</h2>
 <video controls>
-<source src="/download/{{ video }}">
+    <source src="/video/{{ original }}" type="video/mp4">
 </video>
 
-<!-- 🔥 SUBTITLE BUTTON -->
-<button onclick="toggleSubs()">📜 Show Subtitles</button>
+<h2>🌍 Translated Video</h2>
+<video controls>
+    <source src="/video/{{ video }}" type="video/mp4">
+</video>
 
-<!-- 🔥 SUBTITLE BOX -->
-<div id="subsBox">
-{% for line in subtitles %}
-<p>{{ line }}</p>
-{% endfor %}
+<!-- BUTTONS -->
+<a href="/download/{{ video }}">
+    <button class="btn">⬇ Download Video</button>
+</a>
+
+<button class="btn" onclick="toggleSubtitle()">📄 Show Subtitles</button>
+
+<a href="/download_subtitle">
+    <button class="btn">⬇ Download Subtitles</button>
+</a>
+
+<!-- SUBTITLE BOX -->
+<div id="subtitle-box" style="display:none;">
+    <h3>Subtitles:</h3>
+    <p>{{ subtitles }}</p>
 </div>
-
-<!-- DOWNLOAD -->
-<a href="/download/{{ video }}"><button>⬇ Download Video</button></a>
-<a href="/download/subtitles.srt"><button>⬇ Download Subtitles</button></a>
-
-{% endif %}
-
-{% if mode == "text" %}
-<h3>Translated Text</h3>
-<p>{{ text }}</p>
-
-<button onclick="toggleSubs()">📜 Show Subtitles</button>
-
-<div id="subsBox">
-{% for line in subtitles %}
-<p>{{ line }}</p>
-{% endfor %}
-</div>
-
-{% endif %}
-
-{% if mode == "error" %}
-<h2 style="color:rgb(146, 48, 48);">{{ error }}</h2>
-{% endif %}
 
 </body>
 </html>
