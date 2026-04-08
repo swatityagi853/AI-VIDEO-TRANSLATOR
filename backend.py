@@ -128,8 +128,6 @@ def home():
 
 # RUN
 if __name__ == "__main__":
-    
-    import os
-
-    port = webbrowser.get().name == "chrome" and 10000 or int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=port)
+    port =10000
+    webbrowser.open(f"http://127.0.0.1:{port}")
+app.run(host="0.0.0.0", port=port)
